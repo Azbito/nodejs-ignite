@@ -17,7 +17,7 @@ const server =  http.createServer(async (req, res)=> {
     if (method == 'POST' && url == '/users') {
         const {name, email} = req.body
         const user = {
-            id: 1,
+            id: randomUUID(),
             name,
             email
         }
