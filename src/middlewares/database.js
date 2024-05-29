@@ -18,11 +18,23 @@ export class Database {
         })
     }
 
-    select(table) {
-        const data = this.#database[table] ?? []
-    
-        return data
+    select(table, search) {
+        let data = this.#database[table];
+        
+        if (!Array.isArray(data)) {
+            return;
+        }
+        
+        if (search) {
+            data = data.filter(row => {
+                return Object.entries(search).some(([key, value]) => {
+                    return row[key].toLowerCase().includes(value.toLowerCase());
+                });
+            });
+        }
+        return data;
     }
+    
 
     insert(table, data) {
         if (Array.isArray(this.#database[table])) {
